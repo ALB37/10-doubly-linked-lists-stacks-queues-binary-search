@@ -29,10 +29,10 @@ class DoublyLinkedList{
 
     if(node.value === this.value){
       if (!this.next){
-        delete this.next;
-        delete this.prev;
-        delete this.value;
-        return this;
+        // delete this.next;
+        // delete this.prev;
+        // delete this.value;
+        return null;
       }
     }
 
@@ -64,9 +64,9 @@ class DoublyLinkedList{
     if(!(node instanceof DoublyLinkedList)){
       throw new TypeError('<node> should be an instance of DoublyLinkedList');
     }
-    if(node.value === undefined){
-      throw new TypeError('<node> must have (a) node(s)');
-    }
+    // if(node === null){
+    //   throw new TypeError('<node> must have (a) node(s)');
+    // }
 
     if (!counter) {
       if (this.next){

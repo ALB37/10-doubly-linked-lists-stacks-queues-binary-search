@@ -5,6 +5,7 @@ const DoublyLinkedList = require('../model/doubly-linked-list');
 describe('doubly-linked-list.js',() => {
   test('A list with a single node, should have a value and no next or prev', () => {
     let result = new DoublyLinkedList(1);
+    
     expect(result.value).toEqual(1);
     expect(result.next).toEqual(null);
     expect(result.prev).toEqual(null);
@@ -12,6 +13,7 @@ describe('doubly-linked-list.js',() => {
 
   test('insertion should properly modify the next property and new node\'s prev should point to previous node\'s value', () => {
     let result = new DoublyLinkedList(1);
+
     result.append(new DoublyLinkedList(2));
     result.append(new DoublyLinkedList(3));
 
@@ -65,6 +67,7 @@ describe('doubly-linked-list.js',() => {
 
     expect(first.value).toEqual(20);
     expect(first.prev).toEqual(null);
+
     expect(first.next.value).toEqual(30);
     expect(first.next.prev.value).toEqual(20);
 
@@ -94,31 +97,12 @@ describe('doubly-linked-list.js',() => {
     expect(first.next.next).toEqual(null);
   });
 
-  test('delete should be able to erase the only element of a DoublyLinkedList, and should be able to delete that regardless of order of deletion', () => {
+  test('delete should be able to erase the only element of a DoublyLinkedList', () => {
     let first = new DoublyLinkedList(10);
-    let second = new DoublyLinkedList(20);
-    let third = new DoublyLinkedList(30);
 
-    first.append(second);
-    first.append(third);
+    first = first.delete(first);
 
-    first.delete(third);
-    first.delete(second);
-    first.delete(first);
-
-    expect(first.value).toEqual(undefined);
-    expect(first.prev).toEqual(undefined);
-    expect(first.next).toEqual(undefined);
-    expect(first).toEqual({});
-
-    first.delete(second);
-    first.delete(first);
-    first.delete(third);
-
-    expect(first.value).toEqual(undefined);
-    expect(first.prev).toEqual(undefined);
-    expect(first.next).toEqual(undefined);
-    expect(first).toEqual({});
+    expect(first).toEqual(null);
   });
 
   test('DoublyLinkedList methods should throw errors if argument passed is not a node', () => {
@@ -129,8 +113,16 @@ describe('doubly-linked-list.js',() => {
     expect(() => dll.listLength('not a node')).toThrow();
   });
 
+  test('linked list should remain unchanged if a node is not a member of that linked list', () => {
+    let one = new DoublyLinkedList(1);
+    let two = new DoublyLinkedList(2);
+
+    expect(one.delete(two)).toEqual(one);
+  });
+
   test('length should return the length of the DoublyLinkedList', () => {
     let long = new DoublyLinkedList(1);
+
     long.append(new DoublyLinkedList(2));
     long.append(new DoublyLinkedList(3));
 
@@ -149,14 +141,15 @@ describe('doubly-linked-list.js',() => {
     let one = new DoublyLinkedList(1);
 
     let oneLong = one.listLength(one);
+
     expect(oneLong).toEqual(1);
   });
 
   test('length should throw error if DoublyLinkedList was a linked list that had all nodes removed', () => {
     let weird = new DoublyLinkedList('weird');
-    weird.delete(weird);
+
+    weird = weird.delete(weird);
 
     expect(() => weird.listLength(weird)).toThrow();
   });
-
 });
